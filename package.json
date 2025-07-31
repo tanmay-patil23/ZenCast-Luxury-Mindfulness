@@ -1,0 +1,13 @@
+{
+  "name": "zencast-luxury-mindfulness",
+  "version": "1.0.0",
+  "description": "Ultra-luxury AI-powered mindfulness radio",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve . -l 3000"
+  },
+  "keywords": ["mindfulness", "meditation", "luxury", "bhagavad-gita"],
+  "author": "Tanmay Patil",
+  "license": "TSP"
+}

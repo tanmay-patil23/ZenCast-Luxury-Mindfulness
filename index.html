@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZenCast – Daily Divine Calm</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#218088" />
+    <meta name="description" content="Ultra-luxury AI-powered mindfulness radio with daily Bhagavad Gita wisdom" />
+  </head>
+  <body>
+    <!-- Decorative floating crystals (subtle, purely cosmetic) -->
+    <div class="decorative-layer" aria-hidden="true">
+      <div class="crystal crystal--1"></div>
+      <div class="crystal crystal--2"></div>
+      <div class="crystal crystal--3"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="container header flex justify-between items-center py-16">
+      <div class="flex items-center gap-16">
+        <h1 class="brand">ZenCast</h1>
+        <label for="langSelect" class="sr-only">Language</label>
+        <select id="langSelect" class="form-control" style="max-width: 120px">
+          <option value="en">🇺🇸 EN</option>
+          <option value="sa">🕉️ SA</option>
+          <option value="ja">🇯🇵 JA</option>
+          <option value="ko">🇰🇷 KO</option>
+        </select>
+      </div>
+      <button id="themeToggle" class="btn btn--secondary btn--sm" aria-label="Toggle Theme">🌓 Dark</button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container flex flex-col gap-16">
+      <!-- Daily Shloka Card -->
+      <section class="card" id="todaysCard">
+        <div class="card__header flex justify-between items-center">
+          <h2 id="sessionTitle">Today's Divine Calm</h2>
+          <span id="sessionDate" class="status status--info">July 31, 2025</span>
+        </div>
+        <div class="card__body flex flex-col gap-16">
+          <div id="shlokaText" class="shloka" lang="sa">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥</div>
+          <p id="interpretation" class="interpretation">Focus on the process, not the outcome. Excellence emerges from presence and dedication, not from attachment to results.</p>
+          <!-- Audio Player UI -->
+          <div class="player flex flex-col gap-16 items-center">
+            <div class="waveform" aria-hidden="true">
+              <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+            <div class="progress-container" aria-label="Playback progress">
+              <div id="progressBar" class="progress"></div>
+            </div>
+            <div class="controls flex gap-16 items-center">
+              <button id="replayBtn" class="btn btn--secondary btn--sm pill" aria-label="Replay">↻ Replay</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Archive Card -->
+      <section class="card" id="archiveCard">
+        <div class="card__header flex justify-between items-center">
+          <h3>My Divine Archive</h3>
+          <span class="status status--success" id="streakInfo">🕯️ 7-day Streak</span>
+        </div>
+        <div class="card__body">
+          <ul id="archiveList" class="archive-list"></ul>
+        </div>
+      </section>
+    </main>
+
+    <!-- Floating play/pause control (prominent) -->
+    <div class="floating-controls">
+      <button id="playPauseBtn" class="btn btn--primary btn--lg pill">Play ▷</button>
+    </div>
+
+    <!-- Favorites button -->
+    <button id="favoritesBtn" class="btn btn--outline btn--lg pill favorites-btn" aria-label="Add to Favorites">❤️ Favorite</button>
+
+    <!-- New wisdom button -->
+    <button id="newWisdomBtn" class="btn btn--outline btn--lg pill neon-hover" aria-label="New Wisdom">✨ New Wisdom</button>
+
+    <!-- Chat bubble launcher -->
+    <button id="chatLauncher" class="chat-bubble" aria-label="Open Chat">💬</button>
+
+    <!-- Chat overlay -->
+    <aside id="chatOverlay" class="chat-overlay" aria-label="Chat dialog">
+      <div class="chat-header flex justify-between items-center px-16 py-8">
+        <h4>ZenCast Companion</h4>
+        <button id="chatClose" class="btn btn--secondary btn--sm" aria-label="Close Chat">✖</button>
+      </div>
+      <div id="chatMessages" class="chat-messages flex flex-col gap-8 px-16 py-8" role="log" aria-live="polite"></div>
+      <form id="chatForm" class="chat-form flex gap-8 items-center px-16 py-16">
+        <label for="chatInput" class="sr-only">Message</label>
+        <input id="chatInput" class="form-control flex-1" placeholder="Ask me something…" autocomplete="off" />
+        <button type="submit" class="btn btn--primary btn--sm pill">Send</button>
+      </form>
+    </aside>
+
+    <!-- Settings modal -->
+    <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal__content card flex flex-col gap-16 p-16" style="max-width: 400px">
+        <h4>Settings</h4>
+        <div class="form-group">
+          <label class="form-label">Speech Rate</label>
+          <input type="range" id="speechRate" min="0.5" max="2" step="0.1" value="0.9" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Speech Volume</label>
+          <input type="range" id="speechVolume" min="0" max="1" step="0.1" value="0.8" class="form-control" />
+        </div>
+        <div class="flex gap-8">
+          <button id="settingsClose" class="btn btn--secondary flex-1">Close</button>
+          <button id="settingsSave" class="btn btn--primary flex-1">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI modal (loading) -->
+    <div id="aiModal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal__content card flex flex-col items-center gap-16 p-16" style="max-width: 320px">
+        <h4>Consulting the Cosmos…</h4>
+        <div class="lux-spinner" aria-hidden="true"></div>
+        <p class="text-center">Generating new wisdom for your tranquil journey.</p>
+      </div>
+    </div>
+
+    <!-- Settings launcher -->
+    <button id="settingsLauncher" class="settings-btn" aria-label="Open Settings">⚙️</button>
+
+    <script src="app.js"></script>
+  </body>
+</html>
